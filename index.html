@@ -7,22 +7,63 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-        body { background-color: #000; color: #d1d5db; scroll-behavior: smooth; }
-        .sidebar { background: #050505; border-right: 1px solid #1f2937; }
-        .glass-card { background: #0a0a0a; border: 1px solid #1f2937; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; }
-        .accent { color: #10b981; }
-        pre { border-radius: 8px !important; background: #000 !important; border: 1px solid #1f2937 !important; font-size: 0.8rem !important; }
-        .nav-link { cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; color: #6b7280; }
-        .nav-link:hover { color: #fff; background: #111; }
-        .nav-link.active { background: #111; border-left-color: #10b981; color: #fff; font-weight: bold; }
+        :root {
+            --bg-deep: #020617;      /* Slate-950 */
+            --bg-card: #0f172a;      /* Slate-900 */
+            --accent: #10b981;       /* Emerald-500 */
+            --accent-glow: #064e3b;  /* Emerald-900 */
+            --text-main: #f8fafc;    /* Slate-50 */
+            --text-dim: #94a3b8;     /* Slate-400 */
+            --border: #1e293b;       /* Slate-800 */
+        }
+        body { background-color: var(--bg-deep); 
+            color: var(--text-dim); 
+            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;}
+        .sidebar { background: #020617; 
+            border-right: 1px solid var(--border) }
+        .glass-card {  background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            border-radius: 1rem; 
+            padding: 1.5rem; 
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px -5px rgba(0,0,0,0.5); }
+        .accent { color: var(--accent); }
+        pre { border-radius: 8px !important; 
+            background: #000 !important; 
+            border: 1px solid var(--border) !important; 
+            font-size: 0.85rem !important;
+            padding: 1rem;
+            overflow-x: auto;
+            color: #ecfdf5;}
+        .nav-link {cursor: pointer; 
+            transition: all 0.2s ease; 
+            border-left: 3px solid transparent; 
+            color: var(--text-dim);  }
+        .nav-link:hover { color: var(--text-main); 
+            background: rgba(16, 185, 129, 0.05)}
+        .nav-link.active {  background: rgba(16, 185, 129, 0.1); 
+            border-left-color: var(--accent); 
+            color: var(--text-main); 
+            font-weight: 600;  }
         section { display: none; }
-        section.active { display: block; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .doc-content h1, .doc-content h2 { color: #fff; font-weight: 800; margin-top: 2rem; margin-bottom: 1rem; }
-        .doc-content h3 { color: #10b981; font-weight: 700; margin-top: 1.5rem; }
+        section.active { display: block; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .doc-content h1, .doc-content h2 {color: var(--text-main); 
+            font-weight: 800; 
+            margin-top: 2rem; 
+            margin-bottom: 1rem;  }
+        .doc-content h3 {  color: var(--accent); 
+            font-weight: 700; 
+            margin-top: 1.5rem; }
         .doc-content p { margin-bottom: 1rem; line-height: 1.6; }
         .doc-content ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
-        .doc-content strong { color: #fff; }
+        .doc-content strong { color: var(--text-main);  }
+        /* Estilização da barra de rolagem */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
