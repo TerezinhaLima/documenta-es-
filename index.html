@@ -7,89 +7,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-       :root {
-    --bg-dark: #000000;          /* Fundo Total Black (OLED) */
-    --bg-card: #111111;          /* Cinza quase preto para elevação */
-    --text-main: #DAD1C1;        /* Champagne/Bege claro (Leitura luxuosa) */
-    --text-dim: #A9A5A1;         /* Cinza médio (Subtítulos) */
-    --accent: #ABA192;           /* Taupe metálico (Destaques) */
-    --border: #262626;           /* Borda sutil para não poluir */
-}
-
-body { 
-    background-color: var(--bg-dark); 
-    color: var(--text-dim); 
-    scroll-behavior: smooth;
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-}
-
-.sidebar { 
-    background: #080808; 
-    border-right: 1px solid var(--border);
-}
-
-.glass-card {  
-    background: var(--bg-card); 
-    border: 1px solid var(--border); 
-    border-radius: 0.5rem; /* Bordas mais retas transmitem seriedade */
-    padding: 1.5rem; 
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); 
-}
-
-.accent { color: var(--accent); }
-
-pre { 
-    border-radius: 4px !important; 
-    background: #050505 !important; 
-    border: 1px solid var(--border) !important; 
-    font-size: 0.85rem !important;
-    padding: 1rem;
-    color: var(--text-main);
-}
-
-.nav-link {
-    cursor: pointer; 
-    transition: all 0.3s ease; 
-    border-left: 2px solid transparent; 
-    color: var(--text-dim);  
-    text-transform: uppercase; /* Estética minimalista */
-    letter-spacing: 1px;
-    font-size: 0.75rem;
-}
-
-.nav-link:hover { 
-    color: var(--text-main); 
-    background: rgba(171, 161, 146, 0.03); 
-}
-
-.nav-link.active {  
-    background: rgba(171, 161, 146, 0.08); 
-    border-left-color: var(--accent); 
-    color: var(--text-main); 
-    font-weight: 600;  
-}
-
-.doc-content h1, .doc-content h2 {
-    color: var(--text-main); 
-    font-weight: 300; /* Peso menor para ar mais elegante */
-    letter-spacing: -0.02em;
-    margin-top: 2rem; 
-}
-
-.doc-content h3 {  
-    color: var(--accent); 
-    font-weight: 600; 
-}
-
-/* Scrollbar Minimalista */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
-::-webkit-scrollbar-thumb { background: var(--border); }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-
+        body { background-color: #000; color: #d1d5db; scroll-behavior: smooth; }
+        .sidebar { background: #050505; border-right: 1px solid #1f2937; }
+        .glass-card { background: #0a0a0a; border: 1px solid #1f2937; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; }
+        .accent { color: #10b981; }
+        pre { border-radius: 8px !important; background: #000 !important; border: 1px solid #1f2937 !important; font-size: 0.8rem !important; }
+        .nav-link { cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; color: #6b7280; }
+        .nav-link:hover { color: #fff; background: #111; }
+        .nav-link.active { background: #111; border-left-color: #10b981; color: #fff; font-weight: bold; }
+        section { display: none; }
+        section.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .doc-content h1, .doc-content h2 { color: #fff; font-weight: 800; margin-top: 2rem; margin-bottom: 1rem; }
+        .doc-content h3 { color: #10b981; font-weight: 700; margin-top: 1.5rem; }
+        .doc-content p { margin-bottom: 1rem; line-height: 1.6; }
+        .doc-content ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .doc-content strong { color: #fff; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
@@ -108,7 +41,7 @@ pre {
         </nav>
 
         <div class="mt-auto pt-6 border-t border-gray-900 text-[10px] text-gray-600">
-            © Terezinha Lima
+            © 2025 SysAdmin & Automation
         </div>
     </aside>
 
@@ -145,8 +78,8 @@ pre {
             <pre class="language-bash"><code>#!/bin/bash 
 
 # CONFIGURAÇÕES DO TELEGRAM  
-TELEGRAM_BOT_TOKEN="Sua chave API aqui" 
-TELEGRAM_CHAT_ID="id chat/grupo" #(pode conseguir utilizando inspecionar crtl+f procura por @g.us)
+TELEGRAM_BOT_TOKEN="8474363577:AAH2UCICA1eb8NnMwpq32mmor-iCff6vWvQ" 
+TELEGRAM_CHAT_ID="8466975480" 
 TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" 
 
 # CONFIGURAÇÕES DE BACKUP  
@@ -204,50 +137,11 @@ send_telegram_notification "$MESSAGE"</code></pre>
 
             <h2>3.3 Monitoramento de Espaço em Disco</h2>
             <pre class="language-bash"><code>#!/bin/bash 
-# Configurações 
-
 LIMITE=80 
-
-TELEGRAM_BOT_TOKEN="Sua chave API aqui" 
-
-TELEGRAM_CHAT_ID="id chat/grupo"  #(pode conseguir utilizando inspecionar crtl+f procura por @g.us)
-
-LOG_FILE="/home/teka/monitor_disco.log" 
-
-  
-
-# Verificar uso do disco 
-
 USO=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%') 
 
-  
-
-# Função para enviar mensagem via Telegram 
-
-enviar_telegram() { 
-
-    local mensagem_formatada="$1" 
-
-    curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \ 
-
-        -d chat_id="${TELEGRAM_CHAT_ID}" \ 
-
-        -d text="${mensagem_formatada}" \ 
-
-        -d parse_mode="Markdown" 
-
-} 
-
-  
-
-# Verificar se o uso excede o limite 
-
 if [ "$USO" -ge "$LIMITE" ]; then 
-
-    MENSAGEM="⚠️ Alerta de Disco ⚠️  Uso do disco: ${USO}%" 
-
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $MENSAGEM" >> "$LOG_FILE" 
-
+    MENSAGEM="⚠️ Alerta de Disco ⚠️ Uso do disco: ${USO}%" 
     enviar_telegram "$MENSAGEM" 
 fi</code></pre>
 
