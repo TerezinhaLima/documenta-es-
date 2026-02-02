@@ -23,6 +23,41 @@
         .doc-content p { margin-bottom: 1rem; line-height: 1.6; }
         .doc-content ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
         .doc-content strong { color: #fff; }
+        /* Container para posicionar o botão */
+.code-container {
+    position: relative;
+}
+
+/* Estilo do Botão de Copiar */
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(166, 31, 67, 0.8); /* Cor Vinho */
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s, background 0.2s;
+    text-transform: uppercase;
+}
+
+.code-container:hover .copy-btn {
+    opacity: 1;
+}
+
+.copy-btn:hover {
+    background: #590902; /* Vinho Escuro */
+}
+
+.copy-btn.copied {
+    background: #10b981; /* Verde Sucesso */
+}
+
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
@@ -33,7 +68,11 @@
             <h1 class="text-white font-black text-2xl tracking-tighter uppercase leading-none">TEKA<span class="accent">Lima</span></h1>
             <p class="text-[10px] text-gray-500 font-bold tracking-[0.2em] mt-2 text-center md:text-left">PORTFÓLIO TÉCNICO</p>
         </div>
-        
+        <div class="code-container">
+    <button class="copy-btn">Copiar</button>
+    <pre><code># Seu script aqui...</code></pre>
+</div>
+
         <nav class="space-y-1 flex-grow">
             <p class="text-gray-600 text-[10px] uppercase font-bold tracking-widest mb-4">Documentações</p>
             <div onclick="showSection('redhat')" id="link-redhat" class="nav-link active block p-3 text-sm">🐧 Backup Red Hat 10</div>
@@ -49,7 +88,7 @@
     </aside>
 
     <!-- ÁREA DE CONTEÚDO -->
-    <main class="flex-1 md:ml-72 p-6 md:p-12 max-w-5xl">
+    <main class="flex-1 md:ml-72 p-6 md:p-15 max-w-5xl">
 
         <!-- PROJETO: RED HAT 10 -->
         <section id="redhat" class="active doc-content">
@@ -313,29 +352,21 @@ docker ps</code></pre>
         </section>
 
     </section>
-        <!-- PROJETO: n8n DOCKER -->
+       <!-- PROJETO: n8n DOCKER -->
 <section id="n8n" class="doc-content">
-    <h1 class="text-4xl">Automação de Workflows <span class="accent">n8n</span></h1>
-    <p class="text-sand text-sm uppercase tracking-widest mb-8">Deploy Escalável com Docker Compose</p>
+    <h1 class="text-4xl">Automação com <span class="accent">n8n</span></h1>
+    <p class="text-sand text-sm uppercase tracking-widest mb-8">Instalação via Docker Compose</p>
     
     <div class="glass-card">
-        <h2>1. Visão Geral</h2>
-        <p>O <strong>n8n</strong> é uma ferramenta de automação de fluxo de trabalho extensível. Este setup utiliza a versão estável com persistência de dados local.</p>
-        <ul class="ml-4 space-y-2">
-            <li><strong>Porta Padrão:</strong> 5678</li>
-            <li><strong>Persistência:</strong> Volume Docker para credenciais e workflows.</li>
-            <li><strong>Execução:</strong> Modo autônomo (Queue mode desativado para simplicidade).</li>
-        </ul>
-    </div>
-
-    <h2>2. Configuração Docker Compose</h2>
-    <p>Arquivo <code>docker-compose.yml</code> otimizado:</p>
-    <pre><code>version: '3.8'
-
+        <h2>Guia de Inicialização</h2>
+        <p>Utilize o arquivo <code>docker-compose.yml</code> abaixo para subir sua instância do n8n com persistência local de dados.</p>
+        
+        <div class="code-container">
+            <button class="copy-btn">Copiar</button>
+            <pre><code>version: '3.1'
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n_automation
     restart: always
     ports:
       - "5678:5678"
@@ -343,36 +374,23 @@ services:
       - N8N_HOST=localhost
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
-      - NODE_ENV=production
-      - WEBHOOK_URL=http://seu-ip-ou-dominio:5678/
       - GENERIC_TIMEZONE=America/Sao_Paulo
     volumes:
       - ./n8n_data:/home/node/.n8n</code></pre>
-
-    <h2>3. Comandos de Inicialização</h2>
-    <div class="grid md:grid-cols-2 gap-4">
-        <div class="glass-card mb-0">
-            <h3 class="mt-0">Primeiro Boot</h3>
-            <p class="text-xs text-gray-400">Cria os volumes e sobe o serviço:</p>
-            <pre class="mt-2 text-[10px]"><code>docker-compose up -d</code></pre>
-        </div>
-        <div class="glass-card mb-0">
-            <h3 class="mt-0">Logs em Tempo Real</h3>
-            <p class="text-xs text-gray-400">Verificar erros de conexão:</p>
-            <pre class="mt-2 text-[10px]"><code>docker logs -f n8n_automation</code></pre>
         </div>
     </div>
 
-    <h2>4. Notas de Implementação</h2>
-    <div class="p-6 border-l-2 border-accent-burgundy bg-zinc-950/50 rounded-r-lg">
-        <p class="text-sm">
-            <strong class="accent">⚠️ Importante:</strong> Para integração com o <strong>WhatsApp (Uzapi)</strong> detalhado na outra seção, certifique-se de que o n8n tenha acesso à rede externa para validar os Webhooks.
-        </p>
-        <p class="text-xs text-sand mt-2 italic">
-            Dica: Ao rodar em VPS, altere N8N_PROTOCOL para https e utilize um Proxy Reverso (Nginx/Traefik).
-        </p>
+    <h2>Comandos Rápidos</h2>
+    <div class="code-container">
+        <button class="copy-btn">Copiar</button>
+        <pre><code># Subir o container em modo daemon
+docker-compose up -d
+
+# Verificar logs da aplicação
+docker logs -f n8n</code></pre>
     </div>
 </section>
+
     </main>
 
     <script>
@@ -394,5 +412,26 @@ services:
     <script src="https://cdnjs.cloudflare.com"></script>
     <script src="https://cdnjs.cloudflare.com"></script>
     <script src="https://cdnjs.cloudflare.com"></script>
+    document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const container = button.parentElement;
+        const code = container.querySelector('code').innerText;
+
+        navigator.clipboard.writeText(code).then(() => {
+            // Feedback visual
+          const originalText = button.innerText;
+            button.innerText = 'Copiado!';
+            button.classList.add('copied');
+
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Erro ao copiar: ', err);
+        });
+    });
+});
+
 </body>
 </html>
