@@ -101,8 +101,8 @@
             <pre class="language-bash"><code>#!/bin/bash 
 
 # CONFIGURAÇÕES DO TELEGRAM 
-TELEGRAM_BOT_TOKEN="8474363577:AAH2UCICA1eb8NnMwpq32mmor-iCff6vWvQ" 
-TELEGRAM_CHAT_ID="8466975480" 
+TELEGRAM_BOT_TOKEN="Suan chave API" 
+TELEGRAM_CHAT_ID="id chat/grupo" #para conseguir pegar id chat ou grupo, va no whats web e poe pra inspencionar, aperte crtl_f e procure por @g.us)
 TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" 
 
 # CONFIGURAÇÕES DE BACKUP  
@@ -164,9 +164,9 @@ send_telegram_notification "$MESSAGE"</code></pre>
 
 LIMITE=80 
 
-TELEGRAM_BOT_TOKEN="8474363577:AAH2UCICA1eb8NnMwpq32mmor-iCff6vWvQ" 
+TELEGRAM_BOT_TOKEN="Sua chave API" 
 
-TELEGRAM_CHAT_ID="8466975480"  
+TELEGRAM_CHAT_ID="id chat/grupo" #para conseguir pegar id chat ou grupo, va no whats web e poe pra inspencionar, aperte crtl_f e procure por @g.us)
 
 LOG_FILE="/home/teka/monitor_disco.log" 
 
@@ -214,6 +214,12 @@ fi</code></pre>
                     <li>Verificar logs: <code>tail -f /home/teka/backup.log</code></li>
                     <li>Espaço em disco: <code>df -h</code></li>
                     <li>Recuperação: <code>tar -xzf arquivo.tar.gz -C /destino/</code></li>
+                    <li>Vizualização script backup: <code>cat sistema_backup.sh</code></li>
+                    <li>:Vizualização script monitoramento <code>cat monitor_disco.sh</code></li>
+                    <li>Logs backups: <code>ls -lh meus_backups</code></li>
+                    <li>Roda scripts: <code>sudo ./monitor_disco(./sistema_backup)</code></li>
+                    <li>Vizualição Logrotate: <code>cat /etc/logrotate.d/sistema_backup</code></li>
+                    <li>Crontab: <code>sudo crontab -e</code></li>
                 </ul>
             </div>
 
