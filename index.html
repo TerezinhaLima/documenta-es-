@@ -7,60 +7,100 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-        :root {
-           --bg-dark: #590902;    /* Fundo imersivo */
-  --text-main: #A68A72;  /* Texto legível e suave */
-  --accent-primary: #A61F43; /* Títulos e botões */
-  --accent-secondary: #D94E8F; /* Detalhes e interações */
-        }
-        body { background-color: var(--bg-deep); 
-            color: var(--text-dim); 
-            scroll-behavior: smooth;
-            font-family: 'Inter', sans-serif;}
-        .sidebar { background: #020617; 
-            border-right: 1px solid var(--border) }
-        .glass-card {  background: var(--bg-card); 
-            border: 1px solid var(--border); 
-            border-radius: 1rem; 
-            padding: 1.5rem; 
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px -5px rgba(0,0,0,0.5); }
-        .accent { color: var(--accent); }
-        pre { border-radius: 8px !important; 
-            background: #000 !important; 
-            border: 1px solid var(--border) !important; 
-            font-size: 0.85rem !important;
-            padding: 1rem;
-            overflow-x: auto;
-            color: #ecfdf5;}
-        .nav-link {cursor: pointer; 
-            transition: all 0.2s ease; 
-            border-left: 3px solid transparent; 
-            color: var(--text-dim);  }
-        .nav-link:hover { color: var(--text-main); 
-            background: rgba(16, 185, 129, 0.05)}
-        .nav-link.active {  background: rgba(16, 185, 129, 0.1); 
-            border-left-color: var(--accent); 
-            color: var(--text-main); 
-            font-weight: 600;  }
-        section { display: none; }
-        section.active { display: block; animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .doc-content h1, .doc-content h2 {color: var(--text-main); 
-            font-weight: 800; 
-            margin-top: 2rem; 
-            margin-bottom: 1rem;  }
-        .doc-content h3 {  color: var(--accent); 
-            font-weight: 700; 
-            margin-top: 1.5rem; }
-        .doc-content p { margin-bottom: 1rem; line-height: 1.6; }
-        .doc-content ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
-        .doc-content strong { color: var(--text-main);  }
-        /* Estilização da barra de rolagem */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+       :root {
+    /* Sua nova paleta */
+    --bg-dark: #590902;          /* Fundo Vinho Profundo */
+    --bg-card: #450702;          /* Variação mais escura para cards */
+    --text-main: #f8fafc;        /* Branco suave para leitura */
+    --text-dim: #A68A72;         /* Taupe para textos secundários */
+    --accent-primary: #A61F43;   /* Carmim para títulos e bordas */
+    --accent-secondary: #D94E8F; /* Rosa vibrante para interações */
+    --border: #751a12;           /* Tom de borda harmônico */
+}
+
+body { 
+    background-color: var(--bg-dark); 
+    color: var(--text-dim); 
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.sidebar { 
+    background: #3d0601; /* Escurecimento do vinho base */
+    border-right: 1px solid var(--border);
+}
+
+.glass-card {  
+    background: var(--bg-card); 
+    border: 1px solid var(--border); 
+    border-radius: 1rem; 
+    padding: 1.5rem; 
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4); 
+}
+
+.accent { color: var(--accent-secondary); }
+
+pre { 
+    border-radius: 8px !important; 
+    background: #1a0301 !important; /* Quase preto, mas com fundo quente */
+    border: 1px solid var(--border) !important; 
+    font-size: 0.85rem !important;
+    padding: 1rem;
+    overflow-x: auto;
+    color: #ffdce0; /* Texto do código levemente rosado */
+}
+
+.nav-link {
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+    border-left: 3px solid transparent; 
+    color: var(--text-dim);  
+}
+
+.nav-link:hover { 
+    color: var(--text-main); 
+    background: rgba(217, 78, 143, 0.05); /* Glow usando o rosa */
+}
+
+.nav-link.active {  
+    background: rgba(217, 78, 143, 0.1); 
+    border-left-color: var(--accent-secondary); 
+    color: var(--text-main); 
+    font-weight: 600;  
+}
+
+section { display: none; }
+section.active { display: block; animation: fadeIn 0.5s ease-out; }
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(8px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.doc-content h1, .doc-content h2 {
+    color: var(--text-main); 
+    font-weight: 800; 
+    margin-top: 2rem; 
+    margin-bottom: 1rem;  
+}
+
+.doc-content h3 {  
+    color: var(--accent-primary); 
+    font-weight: 700; 
+    margin-top: 1.5rem; 
+}
+
+.doc-content p { margin-bottom: 1rem; line-height: 1.6; }
+.doc-content strong { color: var(--accent-secondary); }
+
+/* Scrollbar temática */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
