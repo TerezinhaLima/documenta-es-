@@ -55,23 +55,44 @@
             <h1 class="text-4xl">Projeto Prático: Sistema de Backup e Monitoramento para Red Hat 10</h1>
             
             <div class="glass-card mt-8">
-                <h2>1. Visão Geral do Sistema</h2>
-                <p><strong>Objetivo:</strong> Criar um sistema automatizado para:</p>
-                <ul>
-                    <li>Backup de diretórios importantes</li>
-                    <li>Gerenciamento de logs com rotação e compactação</li>
-                    <li>Monitoramento de espaço em disco</li>
-                    <li>Alertas por telegram</li>
-                </ul>
+                <div class="doc-content">
+    <h2 class="mb-6 flex items-center gap-2">
+        <span class="w-8 h-1 bg-[var(--accent)] rounded-full"></span>
+        1. Visão Geral do Sistema
+    </h2>
+    
+    <div class="glass-card mb-8">
+        <p class="text-[var(--text-main)] mb-4 text-lg"><strong>Objetivo:</strong></p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 border border-[var(--border)] rounded-lg bg-black/40 hover:border-[var(--accent)] transition-colors">
+                <span class="text-[var(--accent)] block mb-1">📦 Armazenamento</span>
+                <p class="text-sm">Backup automatizado de diretórios críticos com integridade garantida.</p>
+            </div>
+            <div class="p-4 border border-[var(--border)] rounded-lg bg-black/40 hover:border-[var(--accent)] transition-colors">
+                <span class="text-[var(--accent)] block mb-1">🧹 Higienização</span>
+                <p class="text-sm">Gerenciamento inteligente de logs com rotação e compactação eficiente.</p>
+            </div>
+            <div class="p-4 border border-[var(--border)] rounded-lg bg-black/40 hover:border-[var(--accent)] transition-colors">
+                <span class="text-[var(--accent)] block mb-1">📈 Observabilidade</span>
+                <p class="text-sm">Monitoramento em tempo real de volumetria e espaço em disco.</p>
+            </div>
+            <div class="p-4 border border-[var(--border)] rounded-lg bg-black/40 hover:border-[var(--accent)] transition-colors">
+                <span class="text-[var(--accent)] block mb-1">🔔 Notificação</span>
+                <p class="text-sm">Alertas instantâneos via Telegram para incidentes e status.</p>
+            </div>
+        </div>
+    </div>
 
-                <h2>2. Componentes Principais</h2>
-                <p>Ferramentas que usaremos:</p>
-                <ul>
-                    <li><strong>logrotate</strong> para rotação de logs</li>
-                    <li><strong>cron</strong> para agendamento</li>
-                    <li><strong>df</strong> para monitoramento de disco</li>
-                    <li><strong>telegram</strong> para envio de alertas</li>
-                    <li><strong>tar</strong> para compactação</li>
+    <h2 class="mb-6">2. Stack Tecnológica</h2>
+    <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1 border border-[var(--border)] rounded-full text-[12px] font-bold uppercase tracking-widest text-[var(--text-main)] bg-[var(--bg-card)]">logrotate</span>
+        <span class="px-3 py-1 border border-[var(--border)] rounded-full text-[12px] font-bold uppercase tracking-widest text-[var(--text-main)] bg-[var(--bg-card)]">crontab</span>
+        <span class="px-3 py-1 border border-[var(--border)] rounded-full text-[12px] font-bold uppercase tracking-widest text-[var(--text-main)] bg-[var(--bg-card)]">bash script</span>
+        <span class="px-3 py-1 border border-[var(--border)] rounded-full text-[12px] font-bold uppercase tracking-widest text-[var(--text-main)] bg-[var(--bg-card)]">tar & gzip</span>
+        <span class="px-3 py-1 border border-[var(--border)] rounded-full text-[12px] font-bold uppercase tracking-widest text-[var(--accent)] border-[var(--accent)]">telegram api</span>
+    </div>
+</div>
+
                 </ul>
             </div>
 
@@ -79,7 +100,7 @@
             <p>Script de backup (<code>/home/teka/backup_sistema.sh</code>):</p>
             <pre class="language-bash"><code>#!/bin/bash 
 
-# CONFIGURAÇÕES DO TELEGRAM  
+# CONFIGURAÇÕES DO TELEGRAM 
 TELEGRAM_BOT_TOKEN="8474363577:AAH2UCICA1eb8NnMwpq32mmor-iCff6vWvQ" 
 TELEGRAM_CHAT_ID="8466975480" 
 TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" 
@@ -139,11 +160,50 @@ send_telegram_notification "$MESSAGE"</code></pre>
 
             <h2>3.3 Monitoramento de Espaço em Disco</h2>
             <pre class="language-bash"><code>#!/bin/bash 
+# Configurações 
+
 LIMITE=80 
+
+TELEGRAM_BOT_TOKEN="8474363577:AAH2UCICA1eb8NnMwpq32mmor-iCff6vWvQ" 
+
+TELEGRAM_CHAT_ID="8466975480"  
+
+LOG_FILE="/home/teka/monitor_disco.log" 
+
+  
+
+# Verificar uso do disco 
+
 USO=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%') 
 
+  
+
+# Função para enviar mensagem via Telegram 
+
+enviar_telegram() { 
+
+    local mensagem_formatada="$1" 
+
+    curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \ 
+
+        -d chat_id="${TELEGRAM_CHAT_ID}" \ 
+
+        -d text="${mensagem_formatada}" \ 
+
+        -d parse_mode="Markdown" 
+
+} 
+
+  
+
+# Verificar se o uso excede o limite 
+
 if [ "$USO" -ge "$LIMITE" ]; then 
-    MENSAGEM="⚠️ Alerta de Disco ⚠️ Uso do disco: ${USO}%" 
+
+    MENSAGEM="⚠️ Alerta de Disco ⚠️  Uso do disco: ${USO}%" 
+
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $MENSAGEM" >> "$LOG_FILE" 
+
     enviar_telegram "$MENSAGEM" 
 fi</code></pre>
 
