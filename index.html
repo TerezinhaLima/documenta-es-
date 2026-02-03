@@ -15,6 +15,7 @@
             --accent: #10b981;
             --accent-hover: #059669;
             --text-secondary: #6b7280;
+            --code-comment: #6b7280;
         }
         
         body { 
@@ -108,6 +109,11 @@
         .code-container {
             position: relative;
             margin: 1rem 0;
+        }
+        /* Adicione este estilo para os comentários */
+        .code-comment {
+    color: var(--code-comment) !important;
+    font-style: italic;
         }
         
         /* Estilo do Botão de Copiar */
@@ -552,6 +558,18 @@ docker logs -f n8n</code></pre>
                 });
             });
         });
-    </script>
+        <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Seleciona todos os blocos de código
+    const codeBlocks = document.querySelectorAll('pre code');
+    
+    codeBlocks.forEach(block => {
+        const content = block.innerHTML;
+        // Expressão regular para encontrar comentários começando com #
+        const highlighted = content.replace(/(#.*)/g, '<span class="code-comment">$1</span>');
+        block.innerHTML = highlighted;
+    });
+});
+  </script>
 </body>
 </html>
